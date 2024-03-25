@@ -1,4 +1,6 @@
 ## In this script we will look at the detection, visualization and removal of noisy electrodes.
+# We will also look at the calculation and visualisation of the frequency-based characteristics of the EEG signal
+# and how this information can be used to detect noisy electrodes.
 """
 We can detect noisy electrodes by considering:
 - the amplitude of activity in the time-dependent signal
@@ -13,7 +15,6 @@ The PSD will be plotted in decibels (dB)
 import mne
 import os
 import matplotlib.pyplot as plt
-import numpy as np
 
 # We begin by loading in .fif file that we saved at the end of script 1.
 fnameIn = 'sub-001_eeg_sub-001_task-think1_eeg-hpf-ref_raw.fif'
@@ -60,28 +61,7 @@ The following gives an example of this, supposing we decide that Fpz and Oz are 
 badChannels = ['Fpz', 'Oz']
 rawIn.info['bads'] = badChannels
 
-##-----Manual annotation of EEG data-----------------
-"""
-We can manually annotate the EEG to mark eye-blinks, electrode-jumps, muscular artifacts.
-We will open the interactive window. We define 'a' the key to press when we want to annotate the data.
-"""
-fig = rawIn.plot()
-fig.canvas.key_press_event('a')
 
-## ---------- Automatic detection of eye-blinks ----------
-"""
-MNE has a function that automatically identifies eye-blinks.
-It allows you to create segments of data centred around the identified eye-blink. 
-We can, thus, plot the spatial distribution of activity corresponding to eye-blinks.
-However, crucially, we need to define a channel on which eye-blniks clearly appear. 
-Here we use the electrode AF8, but maybe there are better choices.
-"""
-
-eogev_elec = 'AF8'           #Put the label of your selected electrode here...try different electrodes.
-eog_epochs = mne.preprocessing.create_eog_epochs(rawIn, ch_name=eogev_elec, reject_by_annotation=False)
-eog_epochs.apply_baseline(baseline=(None, -0.2))  # We go from the start of the interval to the -200ms before 0ms
-eog_epochs.average().plot_joint()
-eog_epochs.average().plot_topomap()
 
 
 

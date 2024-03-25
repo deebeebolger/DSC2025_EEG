@@ -268,5 +268,30 @@ for ind in range(len(timeIntvals) - 1):
     axes[ind].set_title(str(timeIntvals[ind]) + ' - ' + str(timeIntvals[ind + 1]) + 'seconds', {'fontsize': 20})
 
 
+##-----Considering the quality of the continuous EEG data-----------------
+##-----Manual annotation of EEG data-----------------
+"""
+We can manually annotate the EEG to mark eye-blinks, electrode-jumps, muscular artifacts.
+We will open the interactive window. We define 'a' the key to press when we want to annotate the data.
+"""
+fig = rawIn.plot()
+fig.canvas.key_press_event('a')
+
+## ---------- Automatic detection of eye-blinks ----------
+"""
+MNE has a function that automatically identifies eye-blinks.
+It allows you to create segments of data centred around the identified eye-blink. 
+We can, thus, plot the spatial distribution of activity corresponding to eye-blinks.
+However, crucially, we need to define a channel on which eye-blniks clearly appear. 
+Here we use the electrode AF8, but maybe there are better choices.
+"""
+
+eogev_elec = 'AF8'           #Put the label of your selected electrode here...try different electrodes.
+eog_epochs = mne.preprocessing.create_eog_epochs(rawIn, ch_name=eogev_elec, reject_by_annotation=False)
+eog_epochs.apply_baseline(baseline=(None, -0.2))  # We go from the start of the interval to the -200ms before 0ms
+eog_epochs.average().plot_joint()
+eog_epochs.average().plot_topomap()
+
+
 
 

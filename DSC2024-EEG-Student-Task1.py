@@ -1,43 +1,46 @@
 """
 ## Student Task 1
 
-For this task, you will use the data recorded while participants completed a range of motor/imagery tasks.
-The full details of the experimental task are available via this link :
-[link to physionet data repository](https://physionet.org/content/eegmmidb/1.0.0/S002/#files-panel)
+For this task you will use the data from the Three Stimulus Auditory Oddball Task.
+James F Cavanagh and Davin Quinn (2021). EEG: Three-Stim Auditory Oddball and Rest in Acute and Chronic TBI.
+OpenNeuro. [Dataset] doi: 10.18112/openneuro.ds003522.v1.1.0
 
-The reference related to the study is:
+Reference:
+Cavanagh JF, Wilson JK, Rieger RE, Gill D, Broadway JM, Story Remer JH, Fratzke V, Mayer AR, Quinn DK.
+ERPs predict symptomatic distress and recovery in sub-acute mild traumatic brain injury. Neuropsychologia. 2019 Sep;132:107125.
+doi: 10.1016/j.neuropsychologia.2019.107125. Epub 2019 Jun 19. PMID: 31228481; PMCID: PMC6702033.
 
-*Schalk, G., McFarland, D.J., Hinterberger, T., Birbaumer, N., Wolpaw, J.R. BCI2000: A General-Purpose Brain-Computer Interface (BCI) System. IEEE Transactions on Biomedical Engineering 51(6):1034-1043, 2004.*
+EEG was recorded from the following three groups of participants while they performed a three-stimulus auditory oddball task:
+- Control participants (group1)
+- Participants with sub-acute mild TBI (Traumatic Brain Injury) (Group0)
+- Participants with chronic TBI (group2)
 
-### Dataset description
+Three sessions of recording were carried out:
+Session 1: 3 to 14 days following injury
+Session 2: an average of 2 months post-injury.
+Session 3: an average of 4 months after session 1.
 
-64-channel EEG was recorded while participants performed different motor/imagery tasks.
- Each subject performed 14 experimental runs: two one-minute baseline runs (one with eyes open, one with eyes closed), and three two-minute runs of each of the four following tasks:
+In this task, the participants were presented with three different auditory stimuli:
+- a standard stimulus (presented 80% of the time)
+- a novel, non-target stimulus (presented 10% of the time)
+- a novel target stimulus (presented 10% of the time)
 
-- **Task 1** A target appears on either the left or the right side of the screen. The subject opens and closes the corresponding fist until the target disappears. Then the subject relaxes.
+The datasets related to this study are in the data folder and are entitled:
+- sub-004-ses-01_task-ThreeStimAuditoryOddball_eeg.edf
+- sub-004-ses-02_task-ThreeStimAuditoryOddball_eeg.edf
 
-- **Task 2** A target appears on either the left or the right side of the screen. The subject imagines opening and closing the corresponding fist until the target disappears. Then the subject relaxes.
-
-- **Task 3** A target appears on either the top or the bottom of the screen. The subject opens and closes either both fists (if the target is on top) or both feet (if the target is on the bottom) until the target disappears. Then the subject relaxes.
-
-- **Task 4** A target appears on either the top or the bottom of the screen. The subject imagines opening and closing either both fists (if the target is on top) or both feet (if the target is on the bottom) until the target disappears. Then the subject relaxes.
-
-For this task you have data from the two baseline runs and from Tasks 1 and 2 for a single participant.
-The data is in .EDF+ format (European data format).
-The EEGs were recorded from 64 electrodes as per the international 10-10 system (excluding electrodes Nz, F9, F10, FT9, FT10, A1, A2, TP9, TP10, P9, and P10)
-
-The datasets are in the data folder, which can be accessed via this amubox link:
-
+You will work from data from session 1 of the study.
 -----------------*******-------------------*****------------------*****------------------******------------------
 
 Task 1 Instructions
 
 Using the script **DSC2024-EEG-Script1_students** as a guide carry out the following:
 
-- Load in one the datasets (**eyes open**) of one of the baseline runs and visualize the raw data.
+- Load in the dataset (*.edf file) corresponding to Session 1 and visualize the raw data.
 - Extract the following dataset information:
     - the sampling frequency (Hz)
     - the names and the type of the channels
+    - the number of sample points
     - the time vector
 - Determine and display the temporal resolution of the dataset.
 - Do you need to remove the DC component? Do this if needed.
@@ -45,18 +48,16 @@ Using the script **DSC2024-EEG-Script1_students** as a guide carry out the follo
 - Can you spot any artifacts in the data? Can you identify the artifact?
 - Present a **temporal** and **spatial** visualization of the artifact. For the temporal visualization you can plot one or several individual electrodes.
 
-- Load in the dataset corresponding to the second baseline run (**eyes closed**) and carry out the same visualisation and processing steps as for the first baseline run. Then compare the two datasets.
-
-Do you notice any differences between the two?
-If so, present figures that highlight these differences.
 """
 
 # Put your code in here.
-# Maybe seperate each answer by a divider ##--------------------## (for example)
+# Maybe separate each answer by a divider ##--------------------## (for example)
 # Don't forget to import the required packages.
 
 
 # Help for loading in the *.edf file:
+fullpath =
 rawIn = mne.io.read_raw_edf(fullpath, preload=True)
+-----
 
 
