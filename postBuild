@@ -1,2 +1,1 @@
-wget -q -O sub-004_ses-02_task-ThreeStimAuditoryOddball_eeg.edf "https://amubox.univ-amu.fr/s/otMp9nAdL4AzL7S/sub-004_ses-02_task-ThreeStimAuditoryOddball_eeg.edf"
-wget -q -O sub01-med1.bdf "https://amubox.univ-amu.fr/s/kF4eiibSBBPwb9Z/sub-001_eeg_sub-001_task-med2_eeg.bdf"
+wget -q -O chb01_03.edf "https://drive.google.com/file/d/1ss3IMMrYMNEKMUVkVCKNIiTlKH5kazJF/view?usp=sharing/chb01_03.edf"
