@@ -269,9 +269,8 @@ for ind in range(len(timeIntvals) - 1):
 ## Finally we will save the highpass filtered and re-referenced data as a *.fif file.
 """
 Note: In MNE-Python, when saving continuous data, the file name has to end _raw.fif.
-Here, hpf (highpass filtered) and ref (re-referenced) has been added to name to indicate the processing steps applied.
 """
-fnameSave = 'sub-001_eeg_sub-001_task-think1_eeg-hpf-ref_raw.fif'
+fnameSave = 'sub-001_eeg_sub-001_task-think1_eeg_short_raw.fif'
 fullpathSave = os.path.join(filepath, fnameSave)
 rawInRef.save(fullpathSave)
 
