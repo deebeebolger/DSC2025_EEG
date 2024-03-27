@@ -20,12 +20,23 @@ import matplotlib.pyplot as plt
 fnameIn = 'sub-001_eeg_sub-001_task-think1_eeg-hpf-ref_raw.fif'
 fpathIn = 'data'
 fullnameIn = os.path.join(fpathIn, fnameIn)
-rawIn = mne.io.read_raw_fif(fullnameIn)
+rawIn = mne.io.read_raw_fif(fullnameIn, preload=True)
 
 # Plot the power spectral density (PSD)
 mne.viz.plot_raw_psd(rawIn, fmin=0.5, fmax=80, tmin=25, tmax=50, picks='eeg', dB=True)
 
-# We can calculate the PSD and plot the PSD values and the frequencies.
+### Computing the Power Spectral Density (PSD)
+"""
+In the previous step, we applied the mne method, *plot_raw_psd()* to visualize the frequency content of our EEG dataset.
+Here we will calculate the PSD (using a *multitaper* method) using the *comput_psd()* function. This function outputs the PSD values (in dB - a log scale) and the frequencies.
+Then we plot the frequencies against the PSD values.
+
+Here we plot frequencies between 0.5Hz and 80Hz.
+We are plotting the spectrum for the scalp channel (*picks = 'eeg').
+
+At what frequencies do we observe peaks? 
+Do you know what these peak frequencies might correspond to? 
+"""
 
 rawSpectre = rawIn.compute_psd(method='multitaper', fmin=0.5, fmax=80, tmin=None, tmax=None, picks='eeg')
 PSD, freqs = rawSpectre.get_data(exclude=(), return_freqs=True)
