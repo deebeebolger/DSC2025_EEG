@@ -26,17 +26,17 @@ In this task, the participants were presented with three different auditory stim
 - a novel target stimulus (presented 10% of the time)
 
 The datasets related to this study are in the data folder and are entitled:
-- sub-004-ses-01_task-ThreeStimAuditoryOddball_eeg.edf
-- sub-004-ses-02_task-ThreeStimAuditoryOddball_eeg.edf
+- **sub-004_ses-01_task-ThreeStimAuditoryOddball_eeg_segment1.set** and corresponding associated **sub-004_ses-01_task-ThreeStimAuditoryOddball_eeg_segment1.fdt** file
+- **sub-004_ses-02_task-ThreeStimAuditoryOddball_eeg_segment1.set** and its corresponding **sub-004_ses-02_task-ThreeStimAuditoryOddball_eeg_segment1.fdt file**
 
-You will work from data from session 1 of the study.
+For this task, you will work from data from sessions 1 of the study, so you will load in the file: **sub-004_ses-01_task-ThreeStimAuditoryOddball_eeg_segment1.set**
 -----------------*******-------------------*****------------------*****------------------******------------------
 
 Task 1 Instructions
 
 Using the script **DSC2024-EEG-Script1_students** as a guide carry out the following:
 
-- Load in the dataset (*.edf file) corresponding to Session 1 and visualize the raw data.
+- To get you started, the code is provided for loading in and visualizing the raw data.
 - Extract the following dataset information:
     - the sampling frequency (Hz)
     - the names and the type of the channels
@@ -50,14 +50,21 @@ Using the script **DSC2024-EEG-Script1_students** as a guide carry out the follo
 
 """
 
-# Put your code in here.
-# Maybe separate each answer by a divider ##--------------------## (for example)
+# Put your code in cells here. Maybe a cell per answer...
 # Don't forget to import the required packages.
+# The matplotlib widget line faciltates the presentation of interactive plots.
+
+import mne
+import os
+import matplotlib.pyplot as plt
 
 
-# Help for loading in the *.edf file:
-fullpath =
-rawIn = mne.io.read_raw_edf(fullpath, preload=True)
------
+# Help for loading in the *.set file:
+filename = 'sub-004_ses-01_task-ThreeStimAuditoryOddball_eeg_segment1.set' # This .set file will automatically look for its corresponding *.fdt file
+filepath = 'data'
+fullpath = os.path.join(filepath, filename)
+rawIn = mne.io.read_raw_eeglab(fullpath, preload=True)
+rawIn.plot()
+
 
 
