@@ -8,10 +8,10 @@ import matplotlib.pyplot as plt
 import os
 import numpy as np
 
-fname = 'sub-001_eeg_sub-001_task-think1_eeg.bdf'
+fname = 'sub-001_eeg_sub-001_task-think1_eeg_short.set'
 filepath = 'data'
 fullpath = os.path.join(filepath, fname)
-rawIn = mne.io.read_raw_bdf(fullpath, preload=True)
+rawIn = mne.io.read_raw_eeglab(fullpath, preload=True)
 
 ## -------------- Now i am going to visualize the raw dataset: Channels X Time ---------------------
 rawIn.plot()
@@ -32,7 +32,7 @@ By doing this each data type is scaled appropriately when visualized.
 my_dict = {'EXG1': 'eog', 'EXG2': 'eog', 'EXG3': 'eog', 'EXG4': 'eog', 'EXG5': 'eog', 'EXG6': 'eog', 'EXG7': 'eog',
            'EXG8': 'eog',
            'GSR1': 'misc', 'GSR2': 'misc', 'Erg1': 'stim', 'Erg2': 'stim', 'Resp': 'resp', 'Plet': 'misc',
-           'Temp': 'misc', 'Status': 'stim'}
+           'Temp': 'misc'}
 print(my_dict)
 rawIn.set_channel_types(my_dict)  # Apply the channel type to our raw object.
 mne.viz.plot_raw(rawIn, duration=5.0, scalings="auto", remove_dc=True)  # Plot again the Channels X Time
@@ -240,7 +240,7 @@ montage = mne.channels.make_standard_montage('standard_1020')  # Assigning the s
 mne.viz.plot_montage(mne.channels.make_standard_montage('standard_1020'))  # Visualize the montage
 rawInRef.set_montage(montage)
 
-timeIntval = [70, 75]  # Defining the time interval over which to plot the topography.
+timeIntval = [5, 10]  # Defining the time interval over which to plot the topography.
 timeIndx = rawInRef.time_as_index(timeIntval)  # Find the indices of the samples in the defined time interval.
 chanRange = np.arange(0, 64)
 dataSeg1 = rawInRef.get_data(chanRange, timeIndx[0], timeIndx[1])
@@ -254,7 +254,7 @@ Now we will plot several topographies over time from 60seconds to 80seconds in 5
 This allows us to appreciate the change in activity across all electrodes over time.
 '''
 
-timeIntvals = np.arange(60, 80, 5)
+timeIntvals = np.arange(5, 20, 5)
 fig2, axes = plt.subplots(1, len(timeIntvals) - 1, figsize=(15, 5))
 for ind in range(len(timeIntvals) - 1):
     curr_int = [timeIntvals[ind], timeIntvals[ind + 1]]
@@ -284,19 +284,5 @@ We will open the interactive window. We define 'a' the key to press when we want
 fig = rawIn.plot()
 fig.fake_keypress('a')
 
-## ---------- Automatic detection of eye-blinks ----------
-"""
-MNE has a function that automatically identifies eye-blinks.
-It allows you to create segments of data centred around the identified eye-blink. 
-We can, thus, plot the spatial distribution of activity corresponding to eye-blinks.
-However, crucially, we need to define a channel on which eye-blniks clearly appear. 
-Here we use the electrode AF8, but maybe there are better choices.
-"""
-
-eogev_elec = 'AF8'           #Put the label of your selected electrode here...try different electrodes.
-eog_epochs = mne.preprocessing.create_eog_epochs(rawIn, ch_name=eogev_elec, reject_by_annotation=False)
-eog_epochs.apply_baseline(baseline=(None, -0.2))  # We go from the start of the interval to the -200ms before 0ms
-eog_epochs.average().plot_joint()
-eog_epochs.average().plot_topomap()
 
 
