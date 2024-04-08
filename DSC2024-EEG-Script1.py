@@ -199,7 +199,6 @@ We will use the .filter() method in MNE.
 '''
 rawInFilt = rawIn.copy().filter(0.1, None,
                                 fir_design='firwin')  # Notice that we created a copy of the origin rawIn data before filtering.
-
 mne.viz.plot_raw(rawInFilt, scalings='auto', remove_dc=False)  # Visualize in Channels X Time format.
 
 ##---------- Re-referencing the data---------------------##
