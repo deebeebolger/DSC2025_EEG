@@ -57,6 +57,7 @@ Using the script **DSC2024-EEG-Script1_students** as a guide carry out the follo
 import mne
 import os
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 # Help for loading in the *.set file:
