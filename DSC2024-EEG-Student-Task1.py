@@ -66,5 +66,52 @@ fullpath = os.path.join(filepath, filename)
 rawIn = mne.io.read_raw_eeglab(fullpath, preload=True)
 rawIn.plot()
 
+## Indication on plotting the average spatial distribution of activity over a given interval.
+'''
+Preparing the raw object so that we can plot the topography.
+In addition to looking at the signal as a function, we can look at the spatial distribution of 
+activity across the head (topography) over a given time interval. 
+A topography over a time interval can be used to highlight activity at a specific time interval. 
+To plot a single topography, we need to define a vector of the mean activity over define 
+time interval for each electrode.
 
+Before we can visualize the topography, we need to define the electrode layout 
+or montage that corresponds to the current dataset's configuration.
+
+Here the montage is the standard 10-20 configuration which defines how the electrodes are positioned relative 
+to one another on the scalp. The inter-electrode distance is either 10% or 20% of the total length and width of the head.
+'''
+#  First we need to identify the types of channels: eeg or "eog" (electro-oculogram)
+#  The we need to add a channel montage information to our data to define the positioning of each
+# electrode in 3D space.
+
+rawIn.info['ch_names']
+
+my_dict = {'VEOG': 'eog'}
+print(my_dict)
+rawIn.set_channel_types(my_dict)  # Apply the channel type to our raw object.
+
+## Assign the standard 10-20 montage to the raw object.
+
+montage = mne.channels.make_standard_montage('standard_1020')  # Assigning the standard 10-20 montage
+mne.viz.plot_montage(mne.channels.make_standard_montage('standard_1020'))  # Visualize the montage
+rawIn.set_montage(montage)
+
+## Calculate the average EEG activity over a d-pre-defined interval (in seconds).
+#  Express the time limits (10secs, 15secs) as time point indices.
+#  Extract the data of the defined time interval and find the average.
+#  Plot the spatial distribution of the activity using MNE's plot_topomap() function
+
+timeIntval = [10, 15]                       # Defining the time interval (10-15 seconds) over which to plot the topography.
+timeIndx = rawIn.time_as_index(timeIntval)  # Express the times in seconds as indices using the time_as_index() method.
+chanRange = np.arange(0, 63)                # We will plot only the first 63 electrodes, the scalp electrodes.
+
+# Extract the data from the raw object as an array with dimensions Channel number X Time points
+dataIn = np.array(rawIn.get_data())
+dataSeg1 = dataIn[chanRange, timeIndx[0]:timeIndx[1]]
+dataSeg_mean = np.mean(dataSeg1, 1)
+
+# Visualise the average activity over the time interval as a topography.
+fig1, ax1 = plt.subplots(1)
+mne.viz.plot_topomap(dataSeg_mean, rawIn.info, ch_type='eeg', axes=ax1)
 
