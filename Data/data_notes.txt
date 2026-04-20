@@ -1,0 +1,1 @@
+You will load the data files (.set and accompanying .fdt files) into this folder.
